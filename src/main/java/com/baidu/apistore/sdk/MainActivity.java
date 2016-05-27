@@ -1,10 +1,15 @@
 package com.baidu.apistore.sdk;
 
+import android.annotation.TargetApi;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -56,6 +61,14 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private TextView mCwContent;
     private TextView mDressBrief;
     private TextView mDressContent;
+    private ImageView mWeatherImage1;
+    private ImageView mWeatherImage2;
+    private ImageView mWeatherImage3;
+    private ImageView mWeatherImage4;
+    private ImageView mWeatherImage5;
+    private ImageView mWeatherImage6;
+    private ImageView mWeatherImage7;
+    private LinearLayout mLinearLayout;
     private SwipeRefreshLayout mRefreshLayout;
 
 
@@ -66,6 +79,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         initUI();
         apiTest();
         mRefreshLayout.setOnRefreshListener(this);
+
     }
 
     private void initUI() {
@@ -98,6 +112,13 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         mWind_sd5 = (TextView) findViewById(R.id.wind_sd5);
         mWind_sd6 = (TextView) findViewById(R.id.wind_sd6);
         mWind_sd7 = (TextView) findViewById(R.id.wind_sd7);
+        mWeatherImage1 = (ImageView) findViewById(R.id.weather_image1);
+        mWeatherImage2 = (ImageView) findViewById(R.id.weather_image2);
+        mWeatherImage3 = (ImageView) findViewById(R.id.weather_image3);
+        mWeatherImage4 = (ImageView) findViewById(R.id.weather_image4);
+        mWeatherImage5 = (ImageView) findViewById(R.id.weather_image5);
+        mWeatherImage6 = (ImageView) findViewById(R.id.weather_image6);
+        mWeatherImage7 = (ImageView) findViewById(R.id.weather_image7);
         mComfortable = (TextView) findViewById(R.id.combrt);
         mComfortableContent = (TextView) findViewById(R.id.comContent);
         mCwbrf = (TextView) findViewById(R.id.cwbrf);
@@ -105,7 +126,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         mDressBrief = (TextView) findViewById(R.id.dress_brf);
         mDressContent = (TextView) findViewById(R.id.dressContent);
         mRefreshLayout = (SwipeRefreshLayout) findViewById(R.id.swipe);
-
+        mLinearLayout = (LinearLayout) findViewById(R.id.content_layout);
     }
 
     /**
@@ -122,6 +143,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 para,
                 new ApiCallBack() {
 
+                    @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
                     @Override
                     public void onSuccess(int status, String responseString) {
                         Log.i("sdkdemo", "onSuccess");
@@ -129,7 +151,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                         WeatherBean weatherBean = null;
                         Parse parse = new Parse();
                         weatherBean = parse.resolveWeatherInf(responseString);
-                        Log.i("fnhFire","weatherBean--->"+weatherBean);
+                        Log.i("fnhFire", "weatherBean--->" + weatherBean);
                         mPm.setText(String.valueOf(weatherBean.getPm25()));
                         mWeather.setText(weatherBean.getCond_txt());
                         mTemperature.setText(weatherBean.getNow() + getResources().getString(R.string.tmpC));
@@ -154,6 +176,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                                 mCwContent.setText(weatherBean.getCwTxt());
                                 mDressBrief.setText(weatherBean.getDrsgBrf());
                                 mDressContent.setText(weatherBean.getDrsgTxt());
+                                mLinearLayout.setBackground(todayWeatherImageSet(weatherBean.getCond_txt()));
+                                mWeatherImage1.setImageDrawable(weatherImageSet(oneDayWeatherInfs.getCondN()));
                             }
                             if (i == 1) {
                                 mTem2.setText(oneDayWeatherInfs.getTmpMin() + getResources().getString
@@ -161,6 +185,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                                         (R.string.tmpC));
                                 mWind_det2.setText(oneDayWeatherInfs.getWindDir());
                                 mWind_sd2.setText(oneDayWeatherInfs.getWindSc());
+                                mWeatherImage2.setImageDrawable(weatherImageSet(oneDayWeatherInfs.getCondN()));
                             }
                             if (i == 2) {
                                 mTomorrow1.setText(oneDayTool(oneDayWeatherInfs));
@@ -169,8 +194,10 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                                         (R.string.tmpC));
                                 mWind_det3.setText(oneDayWeatherInfs.getWindDir());
                                 mWind_sd3.setText(oneDayWeatherInfs.getWindSc());
+                                mWeatherImage3.setImageDrawable(weatherImageSet(oneDayWeatherInfs.getCondN()));
                             }
                             if (i == 3) {
+                                mWeatherImage4.setImageDrawable(weatherImageSet(oneDayWeatherInfs.getCondN()));
                                 mTomorrow2.setText(oneDayTool(oneDayWeatherInfs));
                                 mTem4.setText(oneDayWeatherInfs.getTmpMin() + getResources().getString
                                         (R.string.to) + oneDayWeatherInfs.getTmpMax() + getResources().getString
@@ -179,6 +206,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                                 mWind_sd4.setText(oneDayWeatherInfs.getWindSc());
                             }
                             if (i == 4) {
+                                mWeatherImage5.setImageDrawable(weatherImageSet(oneDayWeatherInfs.getCondN()));
                                 mTomorrow3.setText(oneDayTool(oneDayWeatherInfs));
                                 mTem5.setText(oneDayWeatherInfs.getTmpMin() + getResources().getString
                                         (R.string.to) + oneDayWeatherInfs.getTmpMax() + getResources().getString
@@ -187,6 +215,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                                 mWind_sd5.setText(oneDayWeatherInfs.getWindSc());
                             }
                             if (i == 5) {
+                                mWeatherImage6.setImageDrawable(weatherImageSet(oneDayWeatherInfs.getCondN()));
                                 mTomorrow4.setText(oneDayTool(oneDayWeatherInfs));
                                 mTem6.setText(String.valueOf(oneDayWeatherInfs.getTmpMin()) + getResources().getString
                                         (R.string.to) + String.valueOf(oneDayWeatherInfs.getTmpMax()) + getResources().getString
@@ -195,6 +224,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                                 mWind_sd6.setText(oneDayWeatherInfs.getWindSc());
                             }
                             if (i == 6) {
+                                mWeatherImage7.setImageDrawable(weatherImageSet(oneDayWeatherInfs.getCondN()));
                                 mTomorrow5.setText(oneDayTool(oneDayWeatherInfs));
                                 mTem7.setText(oneDayWeatherInfs.getTmpMin() + getResources().getString
                                         (R.string.to) + oneDayWeatherInfs.getTmpMax() + getResources().getString
@@ -235,6 +265,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         return str.toString();
     }
 
+    //获取日期
     private int dateTools(Date str) {
 
         Calendar calendar = Calendar.getInstance();
@@ -282,5 +313,66 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                 Toast.makeText(MainActivity.this, "已获取最新天气数据", Toast.LENGTH_SHORT).show();
             }
         }, 2000);
+    }
+
+    //设置一周天气图片
+    private Drawable weatherImageSet(String weather) {
+        if (weather.equals("多云")) {
+            return getResources().getDrawable(R.mipmap.ic_weather_cloudy);
+        } else if (weather.equals("阴")) {
+            return getResources().getDrawable(R.mipmap.ic_weather_overcast);
+        } else if (weather.equals("晴")) {
+            return getResources().getDrawable(R.mipmap.ic_weather_sunny);
+        } else if (weather.equals("雨夹雪")) {
+            return getResources().getDrawable(R.mipmap.ic_weather_sleet);
+        } else if (weather.equals("阵雪")) {
+            return getResources().getDrawable(R.mipmap.ic_weather_snowflurry);
+        } else if (weather.equals("雷阵雨")) {
+            return getResources().getDrawable(R.mipmap.ic_weather_thundershower);
+        } else if (weather.equals("阵雨")) {
+            return getResources().getDrawable(R.mipmap.ic_weather_shower);
+        } else if (weather.equals("沙尘暴")) {
+            return getResources().getDrawable(R.mipmap.ic_weather_sandstorm);
+        } else if (weather.equals("中雨")) {
+            return getResources().getDrawable(R.mipmap.ic_weather_moderaterain);
+        } else if (weather.equals("中雪")) {
+            return getResources().getDrawable(R.mipmap.ic_weather_moderatesnow);
+        } else if (weather.equals("小雨")) {
+            return getResources().getDrawable(R.mipmap.ic_weather_lightrain);
+        } else if (weather.equals("小雪")) {
+            return getResources().getDrawable(R.mipmap.ic_weather_lightsnow);
+        } else if (weather.equals("大雨")) {
+            return getResources().getDrawable(R.mipmap.ic_weather_heavyrain);
+        } else if (weather.equals("大雪")) {
+            return getResources().getDrawable(R.mipmap.ic_weather_heavysnow);
+        } else if (weather.equals("雾")) {
+            return getResources().getDrawable(R.mipmap.ic_weather_fogs);
+        } else if (weather.equals("冰雹")) {
+            return getResources().getDrawable(R.mipmap.ic_weather_hailstone);
+        } else if (weather.equals("霾")) {
+            return getResources().getDrawable(R.mipmap.ic_weather_haze);
+        }
+        return getResources().getDrawable(R.mipmap.ic_weather_default);
+    }
+    //设置当天天气图片
+    private Drawable todayWeatherImageSet(String weather) {
+        if (weather.equals("多云")) {
+            return getResources().getDrawable(R.mipmap.bg_weather_cloudy);
+        }else if (weather.equals("雾")){
+            return getResources().getDrawable(R.mipmap.bg_weather_fog);
+        }else if (weather.equals("中雨")){
+            return getResources().getDrawable(R.mipmap.bg_weather_moderaterain);
+        }else if (weather.equals("阴")){
+            return getResources().getDrawable(R.mipmap.bg_weather_overcast);
+        }else if (weather.equals("雨")){
+            return getResources().getDrawable(R.mipmap.bg_weather_rain);
+        }else if (weather.equals("雪")){
+            return getResources().getDrawable(R.mipmap.bg_weather_snow);
+        }else if (weather.equals("晴")){
+            return getResources().getDrawable(R.mipmap.bg_weather_sunny);
+        }else if (weather.equals("暴雨")){
+            return getResources().getDrawable(R.mipmap.bg_weather_thunderstorm);
+        }
+        return getResources().getDrawable(R.drawable.content_bg);
     }
 }

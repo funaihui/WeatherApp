@@ -33,10 +33,11 @@
             />
 
         <ImageView
+            android:id="@+id/weather_image1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:src="@mipmap/ic_launcher"/>
+            android:layout_centerInParent="true"
+            android:src="@mipmap/ic_weather_default"/>
 
         <TextView
             android:id="@+id/wind_det1"
@@ -89,10 +90,11 @@
             />
 
         <ImageView
+            android:id="@+id/weather_image2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/ic_weather_default"/>
 
         <TextView
             android:id="@+id/wind_det2"
@@ -146,10 +148,11 @@
             />
 
         <ImageView
+            android:id="@+id/weather_image3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/ic_weather_default"/>
 
         <TextView
             android:id="@+id/wind_det3"
@@ -202,10 +205,11 @@
             />
 
         <ImageView
+            android:id="@+id/weather_image4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/ic_weather_default"/>
 
         <TextView
             android:id="@+id/wind_det4"
@@ -258,10 +262,11 @@
             />
 
         <ImageView
+            android:id="@+id/weather_image5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/ic_weather_default"/>
 
         <TextView
             android:id="@+id/wind_det5"
@@ -314,10 +319,11 @@
             />
 
         <ImageView
+            android:id="@+id/weather_image6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/ic_weather_default"/>
 
         <TextView
             android:id="@+id/wind_det6"
@@ -370,10 +376,11 @@
             />
 
         <ImageView
+            android:id="@+id/weather_image7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/ic_weather_default"/>
 
         <TextView
             android:id="@+id/wind_det7"
