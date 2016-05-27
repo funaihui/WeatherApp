@@ -6,8 +6,11 @@ This is a simple appliation
 - 自动定位（待加）
 - 日期转换
 - SwipeRefresh
+
 ## 软件功能
 - 下拉刷新
 - 动态设置drawable
 - 定位(待加)
 - 获取实时天气
+
+
