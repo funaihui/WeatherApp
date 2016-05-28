@@ -8,6 +8,8 @@ import android.os.Handler;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -75,13 +77,23 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setStatus();
         setContentView(R.layout.activity_main);
+
         initUI();
         apiTest();
         mRefreshLayout.setOnRefreshListener(this);
 
     }
-
+        private void setStatus(){
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+                Window window = getWindow();
+                //透明状态栏
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+                // 透明导航栏
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+            }
+        }
     private void initUI() {
         mTemperature = (TextView) findViewById(R.id.tmp);
         mWeather = (TextView) findViewById(R.id.wea);
@@ -137,7 +149,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
 
         final Parameters para = new Parameters();
 
-        para.put("city", "安阳");
+        para.put("city", "anyang");
         ApiStoreSDK.execute("http://apis.baidu.com/heweather/weather/free",
                 ApiStoreSDK.GET,
                 para,
@@ -149,15 +161,13 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                         Log.i("sdkdemo", "onSuccess");
                         Log.i("sdkdemo", "responseString" + responseString);
                         WeatherBean weatherBean = null;
-                        Parse parse = new Parse();
-                        weatherBean = parse.resolveWeatherInf(responseString);
+                        weatherBean = Parse.resolveWeatherInf(responseString);
                         Log.i("fnhFire", "weatherBean--->" + weatherBean);
                         mPm.setText(String.valueOf(weatherBean.getPm25()));
                         mWeather.setText(weatherBean.getCond_txt());
                         mTemperature.setText(weatherBean.getNow() + getResources().getString(R.string.tmpC));
                         Log.i("sdkdemo", "Weather" + weatherBean);
                         List<OneDayWeatherInfs> list = weatherBean.getOneDayWeatherInfs();
-
                         Iterator<OneDayWeatherInfs> iterator = list.iterator();
                         int i = 0;
                         while (iterator.hasNext()) {
@@ -233,7 +243,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                                 mWind_sd7.setText(oneDayWeatherInfs.getWindSc());
                             }
                             i++;
+
                         }
+
 
                     }
 
@@ -354,23 +366,24 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         }
         return getResources().getDrawable(R.mipmap.ic_weather_default);
     }
+
     //设置当天天气图片
     private Drawable todayWeatherImageSet(String weather) {
         if (weather.equals("多云")) {
             return getResources().getDrawable(R.mipmap.bg_weather_cloudy);
-        }else if (weather.equals("雾")){
+        } else if (weather.equals("雾")) {
             return getResources().getDrawable(R.mipmap.bg_weather_fog);
-        }else if (weather.equals("中雨")){
+        } else if (weather.equals("中雨")) {
             return getResources().getDrawable(R.mipmap.bg_weather_moderaterain);
-        }else if (weather.equals("阴")){
+        } else if (weather.equals("阴")) {
             return getResources().getDrawable(R.mipmap.bg_weather_overcast);
-        }else if (weather.equals("雨")){
+        } else if (weather.equals("雨")) {
             return getResources().getDrawable(R.mipmap.bg_weather_rain);
-        }else if (weather.equals("雪")){
+        } else if (weather.equals("雪")) {
             return getResources().getDrawable(R.mipmap.bg_weather_snow);
-        }else if (weather.equals("晴")){
+        } else if (weather.equals("晴")) {
             return getResources().getDrawable(R.mipmap.bg_weather_sunny);
-        }else if (weather.equals("暴雨")){
+        } else if (weather.equals("暴雨")) {
             return getResources().getDrawable(R.mipmap.bg_weather_thunderstorm);
         }
         return getResources().getDrawable(R.drawable.content_bg);
