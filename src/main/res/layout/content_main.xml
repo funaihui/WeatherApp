@@ -89,6 +89,40 @@
 
             </LinearLayout>
 
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/aqi"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/aqi"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"/>
+                <TextView
+                    android:id="@+id/aqi_src"
+                    android:paddingLeft="5dp"
+                    android:layout_toRightOf="@+id/aqi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/aqi"
+                    android:textSize="16sp"
+                    android:layout_alignBaseline="@+id/aqi"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/tmp_today"
+                    android:layout_alignBaseline="@+id/aqi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:text="@string/tmp"
+                    android:textSize="16sp"
+                    android:textColor="@color/white"/>
+            </RelativeLayout>
 
             <ImageView
                 android:layout_width="match_parent"

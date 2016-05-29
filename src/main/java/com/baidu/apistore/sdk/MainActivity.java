@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
     private TextView mComfortable;
     private TextView mComfortableContent;
     private TextView mCwbrf;
+    private TextView mAqi;
+    private TextView mTmp_today;
     private TextView mCwContent;
     private TextView mDressBrief;
     private TextView mDressContent;
@@ -85,15 +87,17 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         mRefreshLayout.setOnRefreshListener(this);
 
     }
-        private void setStatus(){
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-                Window window = getWindow();
-                //透明状态栏
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-                // 透明导航栏
-                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-            }
+
+    private void setStatus() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Window window = getWindow();
+            //透明状态栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            // 透明导航栏
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         }
+    }
+
     private void initUI() {
         mTemperature = (TextView) findViewById(R.id.tmp);
         mWeather = (TextView) findViewById(R.id.wea);
@@ -124,6 +128,8 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
         mWind_sd5 = (TextView) findViewById(R.id.wind_sd5);
         mWind_sd6 = (TextView) findViewById(R.id.wind_sd6);
         mWind_sd7 = (TextView) findViewById(R.id.wind_sd7);
+        mAqi = (TextView) findViewById(R.id.aqi_src);
+        mTmp_today = (TextView) findViewById(R.id.tmp_today);
         mWeatherImage1 = (ImageView) findViewById(R.id.weather_image1);
         mWeatherImage2 = (ImageView) findViewById(R.id.weather_image2);
         mWeatherImage3 = (ImageView) findViewById(R.id.weather_image3);
@@ -178,6 +184,9 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                                 mTem1.setText(oneDayWeatherInfs.getTmpMin() + getResources().getString
                                         (R.string.to) + oneDayWeatherInfs.getTmpMax() + getResources().getString
                                         (R.string.tmpC));
+                                mTmp_today.setText(oneDayWeatherInfs.getTmpMin() + getResources().getString
+                                        (R.string.to) + oneDayWeatherInfs.getTmpMax() + getResources().getString
+                                        (R.string.tmpC));
                                 mWind_det1.setText(oneDayWeatherInfs.getWindDir());
                                 mWind_sd1.setText(oneDayWeatherInfs.getWindSc());
                                 mComfortable.setText(weatherBean.getComfBrf());
@@ -185,6 +194,7 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
                                 mCwbrf.setText(weatherBean.getCwBrf());
                                 mCwContent.setText(weatherBean.getCwTxt());
                                 mDressBrief.setText(weatherBean.getDrsgBrf());
+                                mAqi.setText(aqiTool(weatherBean.getAqi()));
                                 mDressContent.setText(weatherBean.getDrsgTxt());
                                 mLinearLayout.setBackground(todayWeatherImageSet(weatherBean.getCond_txt()));
                                 mWeatherImage1.setImageDrawable(weatherImageSet(oneDayWeatherInfs.getCondN()));
@@ -387,5 +397,30 @@ public class MainActivity extends AppCompatActivity implements SwipeRefreshLayou
             return getResources().getDrawable(R.mipmap.bg_weather_thunderstorm);
         }
         return getResources().getDrawable(R.drawable.content_bg);
+    }
+
+    //空气质量数据处理
+    private String aqiTool(int aqi) {
+        String str = null;
+        if (aqi >= 0 && aqi <= 50) {
+            str = "优";
+            return str;
+        } else if (aqi >= 51 && aqi <= 100) {
+            str = "良";
+            return str;
+        } else if (aqi >= 101 && aqi <= 150) {
+            str = "轻度污染";
+            return str;
+        } else if (aqi >= 151 && aqi <= 200) {
+            str = "中度污染";
+            return str;
+        } else if (aqi >= 201 && aqi <= 300) {
+            str = "重度污染";
+            return str;
+        } else if (aqi > 300) {
+            str = "严重污染";
+            return str;
+        }
+        return str;
     }
 }
